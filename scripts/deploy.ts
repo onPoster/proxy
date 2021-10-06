@@ -1,19 +1,21 @@
 import { ethers, run } from 'hardhat';
 
 async function main() {
-  const Greeter = await ethers.getContractFactory('Greeter');
-  const greeter = await Greeter.deploy('Hello, Hardhat!');
+  // See https://github.com/ETHPoster/contract
+  const PosterAddress = '0x0000000000A84Fe7f5d858c8A22121c975Ff0b42'
+  const ProxyPoster = await ethers.getContractFactory('ProxyPoster');
+  const proxyPoster = await ProxyPoster.deploy(PosterAddress);
 
-  await greeter.deployed();
+  await proxyPoster.deployed();
 
-  console.log('Greeter deployed to:', greeter.address);
+  console.log('ProxyPoster:', proxyPoster.address);
 
   // wait until the contract is available across the entire net
   await new Promise((resolve) => setTimeout(resolve, 1000 * 30));
 
   await run('verify:verify', {
-    address: greeter.address,
-    constructorArguments: ['Hello, Hardhat!'],
+    address: proxyPoster.address,
+    constructorArguments: [PosterAddress],
   });
 }
 
