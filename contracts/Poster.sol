@@ -11,7 +11,7 @@ Made with ❤️ by Auryn.eth
 */
 // SPDX-License-Identifier: LGPL-3.0-only
 
-pragma solidity 0.8.0;
+pragma solidity 0.8.2;
 
 
 contract Poster {

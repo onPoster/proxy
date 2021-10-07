@@ -15,21 +15,23 @@ Poster created by Auryn.eth, Proxy Poster by jjperezaguinaga.eth
 */
 // SPDX-License-Identifier: LGPL-3.0-only
 
-pragma solidity 0.8.0;
+pragma solidity 0.8.2;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
-import './EIP712MetaTransaction.sol';
+import '@openzeppelin/contracts/metatx/ERC2771Context.sol';
 import './interfaces/IPoster.sol';
-import 'hardhat/console.sol';
 
-contract ProxyPoster is EIP712MetaTransaction('ProxyPoster', '1') {
+contract ProxyPoster is ERC2771Context {
     IPoster public posterContract;
 
     /**
      * @dev Provide Poster contract address. There’s no update mechanics around this.
-     * @param _posterAddress address Address of the Poster contract.
+     * @param _trustedForwarder address Address of a trusted forwarder.
+     * @param _posterAddress address Address of the poster contract to use.
      */
-    constructor(address _posterAddress) {
+    constructor(address _posterAddress, address _trustedForwarder)
+        ERC2771Context(_trustedForwarder)
+    {
         posterContract = IPoster(_posterAddress);
     }
 
@@ -38,8 +40,8 @@ contract ProxyPoster is EIP712MetaTransaction('ProxyPoster', '1') {
             string(
                 abi.encodePacked(
                     '{"from":"',
-                    Strings.toHexString(uint256(uint160(address(msgSender())))),
-                    '",content:',
+                    Strings.toHexString(uint256(uint160(address(_msgSender())))),
+                    '","content":',
                     content,
                     '}'
                 )

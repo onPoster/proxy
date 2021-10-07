@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 config();
 
+import '@openzeppelin/hardhat-upgrades'
 import '@nomiclabs/hardhat-etherscan';
 import '@nomiclabs/hardhat-waffle';
 import 'hardhat-gas-reporter';
@@ -27,7 +28,7 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
  */
 export default {
   solidity: {
-    version: '0.8.0',
+    version: '0.8.2',
     settings: {
       optimizer: {
         enabled: !!process.env.OPTIMIZER_ENABLED,
