@@ -39,9 +39,9 @@ contract ProxyPoster is ERC2771Context {
         posterContract.post(
             string(
                 abi.encodePacked(
-                    '{"from":"',
+                    '{"type":"microblog","from":"',
                     Strings.toHexString(uint256(uint160(address(_msgSender())))),
-                    '","content":',
+                    '","text":',
                     content,
                     '}'
                 )

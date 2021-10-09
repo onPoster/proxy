@@ -26,6 +26,6 @@ describe('Poster Proxy should:', function () {
         '{"post":{"type":"microblog","text":"this is a post from user proxied to poster"}}';
       await expect(await proxyPoster.connect(user).post(content))
         .to.emit(poster, "NewPost")
-        .withArgs(proxyPoster.address, '{"from":"' + user.address.toLowerCase() + '","content":' + content + '}');
+        .withArgs(proxyPoster.address, '{"type":"microblog","from":"' + user.address.toLowerCase() + '","text":' + content + '}');
     })
   });
